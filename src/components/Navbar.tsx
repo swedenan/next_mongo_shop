@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { signOut } from 'next-auth/react'
+import { User } from '@prisma/client'
 import { mainLinks } from '@/constants'
 import { userLinks } from '@/constants'
 
@@ -16,10 +17,14 @@ import {
 	Equal,
 } from 'lucide-react'
 
-const Nav = () => {
+interface NavbarProps {
+	user: User
+}
+
+const Navbar: React.FC<NavbarProps> = ({ user }) => {
 	const [openUserMenu, setOpenUserMenu] = useState(false)
 	const [openMobileMenu, setOpenMobileMenu] = useState(false)
-	const [user, setUser] = useState(false)
+	// const [user, setUser] = useState(false)
 
 	const handlerUserMenu = () => {
 		setOpenUserMenu(!openUserMenu)
@@ -28,8 +33,6 @@ const Nav = () => {
 	const handlerMobileMenu = () => {
 		setOpenMobileMenu(!openMobileMenu)
 	}
-
-	const singOut = () => {}
 
 	return (
 		<nav>
@@ -81,7 +84,7 @@ const Nav = () => {
 								))}
 								<li
 									className='cursor-pointer'
-									onClick={() => singOut}
+									onClick={() => signOut()}
 								>
 									Sing Out
 								</li>
@@ -120,7 +123,7 @@ const Nav = () => {
 									))}
 									<li
 										className='cursor-pointer'
-										onClick={() => singOut}
+										onClick={() => signOut()}
 									>
 										Sing Out
 									</li>
@@ -134,4 +137,4 @@ const Nav = () => {
 	)
 }
 
-export default Nav
+export default Navbar
